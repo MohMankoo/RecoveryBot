@@ -13,20 +13,24 @@ then run the following command in the project root to install dependencies:
 Create a `.env` file in the root directory to store sensitive information
 such as the bot token. The following are required:
 
-- BOT_TOKEN - The bot token is used to authenticate a bot into your server.
-  If you are the owner of your bot, you can access it from the
+- `BOT_TOKEN` - The bot token is used to authenticate a bot into your
+  server. If you are the owner of your bot, you can access it from the
   [Discord applications page](https://discordapp.com/developers/applications/).
-- DB_URL - This app uses MongoDB. Set the URL to your mongodb server here.
+- `DB_URL` - This app uses MongoDB. Set the URL to your mongodb server
+  here.
 
 ```sh
 BOT_TOKEN=YOUR-TOKEN....
 DB_URL="mongodb://...."
 ```
 
-To start the bot, run the `src/index.js` file.
+To start the bot, run the `src/index.js`. You can either manually run node
+or allow yarn to do so:
 
 ```sh
 node src
+# OR:
+yarn run start
 ```
 
 ## Configuration
