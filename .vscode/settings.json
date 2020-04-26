@@ -1,0 +1,4 @@
+{
+  // Format the code using prettier on save
+  "editor.formatOnSave": true
+}
