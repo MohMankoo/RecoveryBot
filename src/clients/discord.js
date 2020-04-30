@@ -15,6 +15,8 @@ const startBot = async () => {
 const configureBot = () => {
   bot.on('ready', () => {
     console.log(`DISCORD: ${bot.user.tag || 'Bot'} is now connected`)
+
+    bot.user.setActivity('Discipline yields success!')
     setupDB(bot)
   })
 

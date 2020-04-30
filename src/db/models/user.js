@@ -22,7 +22,7 @@ const userSchema = new Schema({
  */
 userSchema.methods.setStreak = function (newStreak) {
   this.streak.days = newStreak
-  this.streak.lastModified = Date.now
+  this.streak.lastModified = Date.now()
 }
 
 /**

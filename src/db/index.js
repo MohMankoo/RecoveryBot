@@ -25,10 +25,10 @@ const setupDB = async bot => {
   })
 
   // Create user entries in database for those that dont exist
-  // TODO: Replace bot.users.map with something that works
   const serverUsers = await bot.users
-  const modelledUsers = serverUsers.map(user => {
-    return { name: user.tag }
+  const modelledUsers = []
+  serverUsers.cache.forEach((user, userID) => {
+    modelledUsers.push({ name: user.tag })
   })
   await createUsers(modelledUsers)
 }

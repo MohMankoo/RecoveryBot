@@ -8,9 +8,6 @@ const {
 
 // Handle the provided message
 const handleMessage = async message => {
-  const userTag = message.author.tag
-  const channel = message.channel
-
   // If the message is a bot command, perform some functionality
   if (message.content.charAt(0) === '!') {
     // The message as an array
@@ -22,19 +19,19 @@ const handleMessage = async message => {
 
     switch (command.toLowerCase()) {
       case 'help':
-        printHelp(channel)
+        printHelp(message.channel)
         break
       case 'up':
-        updateStreak(userTag, channel)
+        updateStreak(message)
         break
       case 'set':
-        setStreak(userTag, commandList[0], channel)
+        setStreak(message, commandList[0])
         break
       case 'reset':
-        resetStreak(userTag, channel)
+        resetStreak(message)
         break
       case 'streak':
-        showStreak(userTag, channel)
+        showStreak(message)
         break
       default:
         return
