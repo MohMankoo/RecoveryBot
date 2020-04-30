@@ -25,7 +25,7 @@ const showStreak = message => {
 
       await message.channel.send(
         `${message.author.tag} is at \`${streakString}\`.` +
-          ` Last updated ${lastModified} EST`
+          ` Last updated ${lastModified} UTC`
       )
     }
   })
