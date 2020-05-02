@@ -39,7 +39,10 @@ const handleMessage = async message => {
         showStreak(message)
         break
       default:
-        return
+        await message.reply(
+          `Command \`${message.content}\` not found. See \`!help\``
+        )
+        break
     }
   }
 }
