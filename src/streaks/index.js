@@ -1,6 +1,9 @@
 const moment = require('moment')
 const { User } = require('../db/models/user')
-const { handleStreakChange, handleDBError } = require('./helpers')
+const {
+  handleStreakChange,
+  createUserNotFound
+} = require('./helpers')
 
 const updateStreak = message =>
   handleStreakChange(message, user => user.streak.days + 1)
@@ -15,7 +18,7 @@ const showStreak = message => {
 
   User.findOne(query, async function (error, user) {
     if (error || !user) {
-      handleDBError(error)
+      createUserNotFound(message, error)
     } else {
       const streak = user.streak.days
       const streakString = `${streak} day${streak === 1 ? '' : 's'}`

@@ -43,7 +43,7 @@ const createUsers = async users => {
 
   // Create default user data.
   // Prevents creation if user data exists.
-  console.log('DB: Creating user data')
+  console.log('DB: Creating user data...')
   users.forEach(user => {
     User.create(user, function (error) {
       error

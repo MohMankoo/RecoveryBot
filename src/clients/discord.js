@@ -23,7 +23,6 @@ const configureBot = () => {
   bot.on('message', async message => await handleMessage(message))
 
   bot.on('guildMemberAdd', member => {
-    console.log(JSON.stringify(member.user, null, 2))
     console.log(`DISCORD: New member added: ${member.user.tag}`)
     createUsers([{ name: member.user.tag }])
   })

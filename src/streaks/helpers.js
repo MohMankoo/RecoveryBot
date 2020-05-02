@@ -1,33 +1,40 @@
 const { User } = require('../db/models/user')
+const { createUsers } = require('../db')
 const { roles } = require('./roles')
 
 // Handle a change in a user's streak.
 // The user should be the author of the provided message.
 const handleStreakChange = (message, streakAccessor) => {
   const query = { name: message.author.tag }
-
-  User.findOne(query, async function (error, user) {
-    if (error || !user) {
-      handleDBError(error)
-    } else {
-      const streak = parseInt(streakAccessor(user), 10)
-      const streakString = `${streak} day${streak === 1 ? '' : 's'}`
-      const successMsg = `Set streak to \`${streakString}\` for ${message.author.tag}`
-
-      if (streak >= 0) {
-        user.setStreak(streak)
-        saveUserDBData(user, message.channel, successMsg)
-        setMemberRole(message.guild.member(message.author), streak)
-      } else {
-        await message.channel.send(`Please use a valid streak.`)
-      }
-    }
+  User.findOne(query, function (error, user) {
+    error || !user
+      ? createUserNotFound(message, error)
+      : updateStreak(user, message, streakAccessor)
   })
+}
+
+// Helper for handleStreakChange
+const updateStreak = async (user, message, streakAccessor) => {
+  const streak = parseInt(streakAccessor(user), 10)
+  const streakString = `${streak} day${streak === 1 ? '' : 's'}`
+  const successMsg =
+    `Set streak to \`${streakString}\` ` + `for ${message.author.tag}`
+
+  if (streak >= 0) {
+    user.setStreak(streak)
+    saveUserDBData(user, message.channel, successMsg)
+    setMemberRoleByStreak(
+      message.guild.member(message.author),
+      streak
+    )
+  } else {
+    await message.channel.send(`Please use a valid streak.`)
+  }
 }
 
 // Set the role for a Discord GuildMember
 // member - Must be a GuildMember object
-const setMemberRole = async (member, streak) => {
+const setMemberRoleByStreak = async (member, streak) => {
   // Remove previous streak roles
   Object.values(roles).forEach(async roleID => {
     if (member.roles.cache.has(roleID))
@@ -58,14 +65,30 @@ const getRoleByStreak = streak => {
 const saveUserDBData = (user, discordChannel, discordMsg) => {
   user.save(async function (error) {
     error
-      ? handleDBError(error)
+      ? console.log(
+          `DB: Error saving data for user: \n${user}\n` +
+            `DB: Error received: \n${error}`
+        )
       : await discordChannel.send(discordMsg)
   })
 }
 
-const handleDBError = error => console.log(`DB: ${error}`)
+// Create a usser not found in the DB using the message object,
+// and provide diagnostic information to console
+// for the provided error.
+const createUserNotFound = async (message, error) => {
+  console.log(
+    `DB: Error finding user ${message.author.tag}: ${error}` +
+      `DB: Attempting to add user ${message.author.tag}`
+  )
+
+  createUsers([{ name: message.author.tag }])
+  await message.channel.send(
+    `Oops! You didn't exist in our database before, try again now.`
+  )
+}
 
 module.exports = {
   handleStreakChange,
-  handleDBError
+  createUserNotFound
 }
