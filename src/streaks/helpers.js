@@ -17,21 +17,17 @@ const handleStreakChange = (message, streakAccessor) => {
 const updateStreak = async (user, message, streakAccessor) => {
   const streak = parseInt(streakAccessor(user), 10)
   const streakString = `${streak} day${streak === 1 ? '' : 's'}`
-  const successMsg =
-    `Set streak to \`${streakString}\` ` +
-    `for @${message.author.tag}`
+  const successMsg = `your streak is now \`${streakString}\``
 
   if (streak >= 0) {
     user.setStreak(streak)
-    saveUserDBData(user, message.channel, successMsg)
+    saveUserDBData(user, message, successMsg)
     setMemberRoleByStreak(
       message.guild.member(message.author),
       streak
     )
   } else {
-    await message.channel.send(
-      `@${message.author.tag}, please use a valid streak. See \`!help\``
-    )
+    await message.reply(`please use a valid streak. See \`!help\``)
   }
 }
 
@@ -65,14 +61,14 @@ const getRoleByStreak = streak => {
 }
 
 // Save a database user object's data
-const saveUserDBData = (user, discordChannel, discordMsg) => {
+const saveUserDBData = (user, originalMsg, successMsg) => {
   user.save(async function (error) {
     error
       ? console.log(
           `DB: Error saving data for user: \n${user}\n` +
             `DB: Error received: \n${error}`
         )
-      : await discordChannel.send(discordMsg)
+      : await originalMsg.reply(successMsg)
   })
 }
 
@@ -86,8 +82,8 @@ const createUserNotFound = async (message, error) => {
   )
 
   createUsers([{ name: message.author.tag }])
-  await message.channel.send(
-    `Oops! @${message.author.tag} didn't exist` +
+  await message.reply(
+    `oops! \`${message.author.tag}\` didn't exist` +
       ` in our database before, try again now.`
   )
 }
