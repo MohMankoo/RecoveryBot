@@ -18,7 +18,8 @@ const updateStreak = async (user, message, streakAccessor) => {
   const streak = parseInt(streakAccessor(user), 10)
   const streakString = `${streak} day${streak === 1 ? '' : 's'}`
   const successMsg =
-    `Set streak to \`${streakString}\` ` + `for ${message.author.tag}`
+    `Set streak to \`${streakString}\` ` +
+    `for @${message.author.tag}`
 
   if (streak >= 0) {
     user.setStreak(streak)
@@ -28,7 +29,9 @@ const updateStreak = async (user, message, streakAccessor) => {
       streak
     )
   } else {
-    await message.channel.send(`Please use a valid streak.`)
+    await message.channel.send(
+      `@${message.author.tag}, please use a valid streak. See \`!help\``
+    )
   }
 }
 
@@ -84,7 +87,8 @@ const createUserNotFound = async (message, error) => {
 
   createUsers([{ name: message.author.tag }])
   await message.channel.send(
-    `Oops! You didn't exist in our database before, try again now.`
+    `Oops! @${message.author.tag} didn't exist` +
+      ` in our database before, try again now.`
   )
 }
 
