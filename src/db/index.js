@@ -18,7 +18,9 @@ const setupDB = async bot => {
 
   // Log connection information
   const database = mongoose.connection
-  database.on('open', () => console.log(`DB: Connected successfully!`))
+  database.on('open', () =>
+    console.log(`DB: Connected successfully!`)
+  )
   database.on('error', error => {
     console.log(`DB: Connection failed to establish to the database.`)
     console.log(error)
@@ -41,14 +43,14 @@ const createUsers = async users => {
 
   // Create default user data.
   // Prevents creation if user data exists.
-  console.log('DB: Creating default user data...')
+  console.log('DB: Creating user data')
   users.forEach(user => {
     User.create(user, function (error) {
       error
-        ? console.log(`DB: User ${user.name} exists. Skipping`)
-        : console.log(`DB: Default data created for User ${user.name}`)
+        ? console.log(`DB: Skipping existing user ${user.name}`)
+        : console.log(`DB: Data created for user ${user.name}`)
     })
   })
 }
 
-module.exports = { setupDB }
+module.exports = { setupDB, createUsers }

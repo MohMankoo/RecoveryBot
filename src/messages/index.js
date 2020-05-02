@@ -10,6 +10,11 @@ const {
 const handleMessage = async message => {
   // If the message is a bot command, perform some functionality
   if (message.content.charAt(0) === '!') {
+    console.log(
+      `DISCORD: Processing command "${message.content}" ` +
+        `by ${message.author.tag}`
+    )
+
     // The message as an array
     const messageBlocks = message.content.split(' ')
     // Omit the '!' in command

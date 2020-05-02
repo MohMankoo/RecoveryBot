@@ -1,6 +1,5 @@
 // Numeric roles are based on a user's streak
 const roles = {
-  noStreak: '696866799156854864',
   0: '697277195172708373',
   1: '697279238415319080',
   2: '697278574201274451',
