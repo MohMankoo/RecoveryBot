@@ -22,9 +22,10 @@ const showStreak = message => {
     } else {
       const streak = user.streak.days
       const streakString = `${streak} day${streak === 1 ? '' : 's'}`
-      const lastModified = moment(user.streak.lastModified).format(
-        'MMMM Do YYYY, h:mm:ss a ZZ'
-      )
+      const lastModified =
+        moment(user.streak.lastModified).format(
+          'MMMM Do YYYY, h:mm:ss a ZZ'
+        ) + 'offset from UTC'
 
       await message.reply(
         `you are at \`${streakString}\`. Last updated ${lastModified}`
