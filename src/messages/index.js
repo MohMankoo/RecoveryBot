@@ -1,6 +1,6 @@
 const { printHelp } = require('./help')
 const {
-  updateStreak,
+  incrementStreak,
   setStreak,
   resetStreak,
   showStreak
@@ -27,7 +27,7 @@ const handleMessage = async message => {
         printHelp(message.channel)
         break
       case 'up':
-        updateStreak(message)
+        incrementStreak(message)
         break
       case 'set':
         setStreak(message, commandList[0])

@@ -5,7 +5,7 @@ const {
   createUserNotFound
 } = require('./helpers')
 
-const updateStreak = message =>
+const incrementStreak = message =>
   handleStreakChange(message, user => user.streak.days + 1)
 
 const setStreak = (message, streak) =>
@@ -35,7 +35,7 @@ const showStreak = message => {
 }
 
 module.exports = {
-  updateStreak,
+  incrementStreak,
   setStreak,
   resetStreak,
   showStreak
