@@ -25,7 +25,7 @@ const showStreak = message => {
       const lastModified =
         moment(user.streak.lastModified).format(
           'MMMM Do YYYY, h:mm:ss a ZZ'
-        ) + 'offset from UTC'
+        ) + ' offset from UTC'
 
       await message.reply(
         `you are at \`${streakString}\`. Last updated ${lastModified}`
