@@ -51,12 +51,18 @@ const getRoleByStreak = streak => {
   // For streaks over a week, calculate on per-week basis
   if (streak <= 7) {
     return roles[streak]
-  } else {
+  } else if (streak < 49) {
     // Example: For streak=20,
     // streakInWeeks=2, startDayOfStreakWeek=14
     const streakInWeeks = Math.trunc(streak / 7)
     const startDayOfStreakWeek = streakInWeeks * 7
     return roles[startDayOfStreakWeek]
+  } else if (streak < 60) {
+    return roles[49]
+  } else if (streak < 90) {
+    return roles[60]
+  } else {
+    return roles[90]
   }
 }
 
