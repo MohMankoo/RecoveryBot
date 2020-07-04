@@ -48,7 +48,7 @@ const setMemberRoleByStreak = async (member, streak) => {
 // for the given streak
 const getRoleByStreak = streak => {
   // For streaks under a week, fetch directly
-  // For streaks over a week, calculate on per-week basis
+  // For streaks over a week, calculate on per-milestone basis
   if (streak <= 7) {
     return roles[streak]
   } else if (streak < 49) {
@@ -61,8 +61,14 @@ const getRoleByStreak = streak => {
     return roles[49]
   } else if (streak < 90) {
     return roles[60]
-  } else {
+  } else if (streak < 180) {
     return roles[90]
+  } else if (streak < 270) {
+    return roles[180]
+  } else if (streak < 365) {
+    return roles[270]
+  } else {
+    return roles[365]
   }
 }
 
