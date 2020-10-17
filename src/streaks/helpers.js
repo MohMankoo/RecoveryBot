@@ -15,17 +15,17 @@ const handleStreakChange = (message, streakAccessor) => {
 
 // Helper for handleStreakChange
 const updateStreak = async (user, message, streakAccessor) => {
+  const prevStreak = user.streak.days
   const streak = parseInt(streakAccessor(user), 10)
+
+  const prevStreakString = `${prevStreak} day${prevStreak === 1 ? '' : 's'}`
   const streakString = `${streak} day${streak === 1 ? '' : 's'}`
-  const successMsg = `your streak is now \`${streakString}\``
+  const successMsg = `updated streak from \`${prevStreakString} ----> ${streakString}\``
 
   if (streak >= 0) {
     user.setStreak(streak)
     saveUserDBData(user, message, successMsg)
-    setMemberRoleByStreak(
-      message.guild.member(message.author),
-      streak
-    )
+    setMemberRoleByStreak(message.guild.member(message.author), streak)
   } else {
     await message.reply(`please use a valid streak. See \`!help\``)
   }
@@ -36,8 +36,7 @@ const updateStreak = async (user, message, streakAccessor) => {
 const setMemberRoleByStreak = async (member, streak) => {
   // Remove previous streak roles
   Object.values(roles).forEach(async roleID => {
-    if (member.roles.cache.has(roleID))
-      await member.roles.remove(roleID)
+    if (member.roles.cache.has(roleID)) await member.roles.remove(roleID)
   })
 
   const roleID = getRoleByStreak(streak)
