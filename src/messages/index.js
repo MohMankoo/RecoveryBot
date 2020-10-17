@@ -4,7 +4,7 @@ const {
   decrementStreak,
   setStreak,
   resetStreak,
-  showStreak
+  printStats
 } = require('../streaks')
 
 // Handle the provided message
@@ -39,8 +39,8 @@ const handleMessage = async message => {
       case 'reset':
         resetStreak(message)
         break
-      case 'streak':
-        showStreak(message)
+      case 'stats':
+        printStats(message)
         break
       default:
         await message.reply(
