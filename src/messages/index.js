@@ -1,6 +1,7 @@
 const { printHelp } = require('./help')
 const {
   incrementStreak,
+  decrementStreak,
   setStreak,
   resetStreak,
   showStreak
@@ -28,6 +29,9 @@ const handleMessage = async message => {
         break
       case 'up':
         incrementStreak(message)
+        break
+      case 'down':
+        decrementStreak(message)
         break
       case 'set':
         setStreak(message, commandList[0])

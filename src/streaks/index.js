@@ -1,12 +1,12 @@
 const moment = require('moment')
 const { User } = require('../db/models/user')
-const {
-  handleStreakChange,
-  createUserNotFound
-} = require('./helpers')
+const { handleStreakChange, createUserNotFound } = require('./helpers')
 
 const incrementStreak = message =>
   handleStreakChange(message, user => user.streak.days + 1)
+
+const decrementStreak = message =>
+  handleStreakChange(message, user => Math.max(0, user.streak.days - 1))
 
 const setStreak = (message, streak) =>
   handleStreakChange(message, user => streak)
@@ -22,10 +22,9 @@ const showStreak = message => {
     } else {
       const streak = user.streak.days
       const streakString = `${streak} day${streak === 1 ? '' : 's'}`
-      const lastModified =
-        moment(user.streak.lastModified).format(
-          'MMMM Do YYYY, h:mm:ss a ZZ'
-        ) + ' offset from UTC'
+      const lastModified = moment(user.streak.lastModified).format(
+        'MMMM Do YYYY, h:mm:ss a ZZ'
+      )
 
       await message.reply(
         `you are at \`${streakString}\`. Last updated ${lastModified}`
@@ -36,6 +35,7 @@ const showStreak = message => {
 
 module.exports = {
   incrementStreak,
+  decrementStreak,
   setStreak,
   resetStreak,
   showStreak
