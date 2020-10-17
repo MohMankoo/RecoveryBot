@@ -4,7 +4,7 @@ const { roles } = require('./roles')
 
 // Handle a change in a user's streak.
 // The user should be the author of the provided message.
-const handleStreakChange = (message, streakAccessor) => {
+exports.handleStreakChange = (message, streakAccessor) => {
   const query = { name: message.author.tag }
   User.findOne(query, function (error, user) {
     error || !user
@@ -46,31 +46,24 @@ const setMemberRoleByStreak = async (member, streak) => {
 
 // Return the role ID appropriate
 // for the given streak
-const getRoleByStreak = streak => {
+const getRoleByStreak = streak =>
   // For streaks under a week, fetch directly
-  // For streaks over a week, calculate on per-milestone basis
-  if (streak <= 7) {
-    return roles[streak]
-  } else if (streak < 49) {
-    // Example: For streak=20,
-    // streakInWeeks=2, startDayOfStreakWeek=14
-    const streakInWeeks = Math.trunc(streak / 7)
-    const startDayOfStreakWeek = streakInWeeks * 7
-    return roles[startDayOfStreakWeek]
-  } else if (streak < 60) {
-    return roles[49]
-  } else if (streak < 90) {
-    return roles[60]
-  } else if (streak < 180) {
-    return roles[90]
-  } else if (streak < 270) {
-    return roles[180]
-  } else if (streak < 365) {
-    return roles[270]
-  } else {
-    return roles[365]
-  }
-}
+	// For streaks over a week, calculate on per-milestone basis
+	streak <= 7
+		? roles[streak]
+	: streak < 49
+		? roles[Math.trunc(streak / 7) * 7]
+	: streak < 60
+		? roles[49]
+	: streak < 90
+		? roles[60]
+	: streak < 180
+		? roles[90]
+	: streak < 270
+		? roles[180]
+	: streak < 365
+		? roles[270]
+		: roles[365]
 
 // Save a database user object's data
 const saveUserDBData = (user, originalMsg, successMsg) => {
@@ -87,7 +80,7 @@ const saveUserDBData = (user, originalMsg, successMsg) => {
 // Create a usser not found in the DB using the message object,
 // and provide diagnostic information to console
 // for the provided error.
-const createUserNotFound = async (message, error) => {
+exports.createUserNotFound = async (message, error) => {
   console.log(
     `DB: Error finding user ${message.author.tag}: ${error}` +
       `DB: Attempting to add user ${message.author.tag}`
@@ -98,9 +91,4 @@ const createUserNotFound = async (message, error) => {
     `oops! \`${message.author.tag}\` didn't exist` +
       ` in our database before, try again now.`
   )
-}
-
-module.exports = {
-  handleStreakChange,
-  createUserNotFound
 }

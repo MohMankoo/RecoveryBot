@@ -5,8 +5,9 @@ const { BOT_TOKEN } = require('../config')
 
 // Create a Discord client for our bot
 const bot = new Client()
+exports.bot = bot
 
-const startBot = async () => {
+exports.startBot = async () => {
   configureBot()
   await bot.login(BOT_TOKEN)
 }
@@ -27,6 +28,3 @@ const configureBot = () => {
     createUsers([{ name: member.user.tag }])
   })
 }
-
-// Return the bot instance as well as a means of starting it
-module.exports = { startBot, bot }

@@ -29,5 +29,4 @@ userSchema.methods.setStreak = function (newStreak) {
  * A User resembles a Discord user.
  * It has a `username` and a `streak` object.
  */
-const User = mongoose.model('User', userSchema)
-module.exports = { User }
+exports.User = mongoose.model('User', userSchema)

@@ -5,15 +5,15 @@ const {
   createUserNotFound
 } = require('./helpers')
 
-const incrementStreak = message =>
+exports.incrementStreak = message =>
   handleStreakChange(message, user => user.streak.days + 1)
 
-const setStreak = (message, streak) =>
-  handleStreakChange(message, user => streak)
+exports.setStreak = (message, streak) =>
+  handleStreakChange(message, () => streak)
 
-const resetStreak = message => handleStreakChange(message, user => 0)
+exports.resetStreak = message => handleStreakChange(message, () => 0)
 
-const showStreak = message => {
+exports.showStreak = message => {
   const query = { name: message.author.tag }
 
   User.findOne(query, async function (error, user) {
@@ -32,11 +32,4 @@ const showStreak = message => {
       )
     }
   })
-}
-
-module.exports = {
-  incrementStreak,
-  setStreak,
-  resetStreak,
-  showStreak
 }

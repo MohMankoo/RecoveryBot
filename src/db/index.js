@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { User } = require('./models/user')
 const { DB_URL } = require('../config')
 
-const setupDB = async bot => {
+exports.setupDB = async bot => {
   // Attempt connecting to DB
   console.log(`DB: Attempting connection.`)
   try {
@@ -29,14 +29,14 @@ const setupDB = async bot => {
   // Create user entries in database for those that dont exist
   const serverUsers = await bot.users
   const modelledUsers = []
-  serverUsers.cache.forEach((user, userID) => {
+  serverUsers.cache.forEach(user => {
     modelledUsers.push({ name: user.tag })
   })
   await createUsers(modelledUsers)
 }
 
 // users - A list of objects matching the User Schema
-const createUsers = async users => {
+exports.createUsers = async users => {
   // Wait for MongoDB to build unique indexes
   // for `username` field if necessary
   await User.init()
@@ -52,5 +52,3 @@ const createUsers = async users => {
     })
   })
 }
-
-module.exports = { setupDB, createUsers }

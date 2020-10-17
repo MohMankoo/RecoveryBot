@@ -7,7 +7,7 @@ const {
 } = require('../streaks')
 
 // Handle the provided message
-const handleMessage = async message => {
+exports.handleMessage = async message => {
   // If the message is a bot command, perform some functionality
   if (message.content.charAt(0) === '!') {
     console.log(
@@ -37,7 +37,7 @@ const handleMessage = async message => {
         break
       case 'streak':
         showStreak(message)
-        break
+				break
       default:
         await message.reply(
           `Command \`${message.content}\` not found. See \`!help\``
@@ -46,5 +46,3 @@ const handleMessage = async message => {
     }
   }
 }
-
-module.exports = { handleMessage }
