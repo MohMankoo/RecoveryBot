@@ -1,19 +1,16 @@
-const moment = require('moment')
-const { User } = require('../db/models/user')
-const {
-  handleStreakChange,
-  createUserNotFound
-} = require('./helpers')
+import moment from 'moment'
+import { User } from '../db/models/user'
+import { handleStreakChange, createUserNotFound } from './helpers'
 
-exports.incrementStreak = message =>
+export const incrementStreak = message =>
   handleStreakChange(message, user => user.streak.days + 1)
 
-exports.setStreak = (message, streak) =>
+export const setStreak = (message, streak) =>
   handleStreakChange(message, () => streak)
 
-exports.resetStreak = message => handleStreakChange(message, () => 0)
+export const resetStreak = message => handleStreakChange(message, () => 0)
 
-exports.showStreak = message => {
+export const showStreak = message => {
   const query = { name: message.author.tag }
 
   User.findOne(query, async function (error, user) {

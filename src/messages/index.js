@@ -1,13 +1,13 @@
-const { printHelp } = require('./help')
-const {
-  incrementStreak,
-  setStreak,
-  resetStreak,
-  showStreak
-} = require('../streaks')
+import { printHelp } from './help'
+import {
+	incrementStreak,
+	setStreak,
+	resetStreak,
+	showStreak,
+} from '../streaks'
 
 // Handle the provided message
-exports.handleMessage = async message => {
+export const handleMessage = async message => {
   // If the message is a bot command, perform some functionality
   if (message.content.charAt(0) === '!') {
     console.log(

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
-const { User } = require('./models/user')
-const { DB_URL } = require('../config')
+import mongoose from 'mongoose'
+import { User } from './models/user'
+import { DB_URL } from '../config'
 
-exports.setupDB = async bot => {
+export const setupDB = async bot => {
   // Attempt connecting to DB
   console.log(`DB: Attempting connection.`)
   try {
@@ -36,7 +36,7 @@ exports.setupDB = async bot => {
 }
 
 // users - A list of objects matching the User Schema
-exports.createUsers = async users => {
+export const createUsers = async users => {
   // Wait for MongoDB to build unique indexes
   // for `username` field if necessary
   await User.init()

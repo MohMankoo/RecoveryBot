@@ -1,5 +1,5 @@
 // Numeric roles are based on a user's streak
-exports.roles = {
+export const roles = {
   0: '697277195172708373',
   1: '697279238415319080',
   2: '697278574201274451',

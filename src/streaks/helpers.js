@@ -1,10 +1,10 @@
-const { User } = require('../db/models/user')
-const { createUsers } = require('../db')
-const { roles } = require('./roles')
+import { User } from '../db/models/user'
+import { createUsers } from '../db'
+import { roles } from './roles'
 
 // Handle a change in a user's streak.
 // The user should be the author of the provided message.
-exports.handleStreakChange = (message, streakAccessor) => {
+export const handleStreakChange = (message, streakAccessor) => {
   const query = { name: message.author.tag }
   User.findOne(query, function (error, user) {
     error || !user
@@ -80,7 +80,7 @@ const saveUserDBData = (user, originalMsg, successMsg) => {
 // Create a usser not found in the DB using the message object,
 // and provide diagnostic information to console
 // for the provided error.
-exports.createUserNotFound = async (message, error) => {
+export const createUserNotFound = async (message, error) => {
   console.log(
     `DB: Error finding user ${message.author.tag}: ${error}` +
       `DB: Attempting to add user ${message.author.tag}`

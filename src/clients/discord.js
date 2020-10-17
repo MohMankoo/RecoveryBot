@@ -1,30 +1,23 @@
-const { Client } = require('discord.js')
-const { handleMessage } = require('../messages')
-const { setupDB, createUsers } = require('../db')
-const { BOT_TOKEN } = require('../config')
+import { Client } from 'discord.js'
+import { handleMessage } from '../messages'
+import { setupDB, createUsers } from '../db'
+import { BOT_TOKEN } from '../config'
 
 // Create a Discord client for our bot
-const bot = new Client()
-exports.bot = bot
+export const bot = new Client()
 
-exports.startBot = async () => {
-  configureBot()
-  await bot.login(BOT_TOKEN)
-}
+bot.on('ready', () => {
+	console.log(`DISCORD: ${bot.user.tag || 'Bot'} is now connected`)
 
-// Configure the bot to respond to messages
-const configureBot = () => {
-  bot.on('ready', () => {
-    console.log(`DISCORD: ${bot.user.tag || 'Bot'} is now connected`)
+	bot.user.setActivity('!help')
+	setupDB(bot)
+})
 
-    bot.user.setActivity('!help')
-    setupDB(bot)
-  })
+bot.on('message', async message => await handleMessage(message))
 
-  bot.on('message', async message => await handleMessage(message))
+bot.on('guildMemberAdd', member => {
+	console.log(`DISCORD: New member added: ${member.user.tag}`)
+	createUsers([{ name: member.user.tag }])
+})
 
-  bot.on('guildMemberAdd', member => {
-    console.log(`DISCORD: New member added: ${member.user.tag}`)
-    createUsers([{ name: member.user.tag }])
-  })
-}
+export const startBot = () => bot.login(BOT_TOKEN)

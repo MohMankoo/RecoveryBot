@@ -1,9 +1,9 @@
-const http = require('http')
-const { startBot } = require('./clients/discord')
-const { PORT } = require('./config')
+import { createServer } from 'http'
+import { startBot } from './clients/discord'
+import { PORT } from './config'
 
 // Setup server for heroku to host
-const server = http.createServer((req, res) => {
+const server = createServer((req, res) => {
   res.statusCode = 200
   res.setHeader('Content-Type', 'text/plain')
   res.end('Hello! This is the RecoveryBot server.')

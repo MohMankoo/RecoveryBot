@@ -1,5 +1,5 @@
 // Print a help message to the given channel
-exports.printHelp = async channel => {
+export const printHelp = async channel => {
   await channel.send(
     `
 ===========
