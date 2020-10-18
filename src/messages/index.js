@@ -1,19 +1,22 @@
-const { printHelp } = require('./help')
-const {
+import { printHelp } from './help'
+import
+{
   incrementStreak,
   decrementStreak,
   setStreak,
   resetStreak,
   printStats
-} = require('../streaks')
+} from '../streaks'
 
 // Handle the provided message
-const handleMessage = async message => {
+export const handleMessage = async message =>
+{
   // If the message is a bot command, perform some functionality
-  if (message.content.charAt(0) === '!') {
+  if(message.content.charAt(0) === '!')
+  {
     console.log(
       `DISCORD: Processing command "${message.content}" ` +
-        `by ${message.author.tag}`
+      `by ${message.author.tag}`
     )
 
     // The message as an array
@@ -23,7 +26,8 @@ const handleMessage = async message => {
     // Keywords following command
     const commandList = messageBlocks.slice(1)
 
-    switch (command.toLowerCase()) {
+    switch(command.toLowerCase())
+    {
       case 'help':
         printHelp(message.channel)
         break
@@ -50,5 +54,3 @@ const handleMessage = async message => {
     }
   }
 }
-
-module.exports = { handleMessage }

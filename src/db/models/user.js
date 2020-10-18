@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+import mongoose, { Schema } from 'mongoose'
 
 /**
  * A User has a `name`, which is a Discord user tag,
@@ -20,18 +19,18 @@ const userSchema = new Schema({
 /**
  * Set a new streak for the User
  * @param {Number} newStreak A number representing
- * the new streak
+ * the new streak2
  */
-userSchema.methods.setStreak = function (newStreak) {
+userSchema.methods.setStreak = function (newStreak)
+{
   this.streak.days = newStreak
   this.streak.lastModified = Date.now()
-  if (newStreak > this.streak.longest) this.streak.longest = newStreak
-  if (!this.streak.dateFirstSet) this.streak.dateFirstSet = Date.now()
+  if(newStreak > this.streak.longest) this.streak.longest = newStreak
+  if(!this.streak.dateFirstSet) this.streak.dateFirstSet = Date.now()
 }
 
 /**
  * A User resembles a Discord user.
  * It has a `username` and a `streak` object.
  */
-const User = mongoose.model('User', userSchema)
-module.exports = { User }
+export const User = mongoose.model('User', userSchema)

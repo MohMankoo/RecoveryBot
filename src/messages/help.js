@@ -1,5 +1,5 @@
 // Print a help message to the given channel
-const printHelp = async channel => {
+export const printHelp = async channel => {
   await channel.send(
     `
 COMMANDS
@@ -15,5 +15,3 @@ COMMANDS
     { code: true }
   )
 }
-
-module.exports = { printHelp }
