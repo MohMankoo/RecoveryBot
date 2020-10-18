@@ -1,4 +1,6 @@
 {
-  // Format the code using prettier on save
-  "editor.formatOnSave": true
+  // Format the code using eslint-prettier on save
+  "editor.formatOnSave": true,
+  // Use 2-tab convention
+  "editor.tabSize": 2
 }
