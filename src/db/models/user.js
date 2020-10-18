@@ -19,13 +19,14 @@ const userSchema = new Schema({
 /**
  * Set a new streak for the User
  * @param {Number} newStreak A number representing
- * the new streak
+ * the new streak2
  */
-userSchema.methods.setStreak = newStreak => {
+userSchema.methods.setStreak = function (newStreak)
+{
   this.streak.days = newStreak
   this.streak.lastModified = Date.now()
-  if (newStreak > this.streak.longest) this.streak.longest = newStreak
-  if (!this.streak.dateFirstSet) this.streak.dateFirstSet = Date.now()
+  if(newStreak > this.streak.longest) this.streak.longest = newStreak
+  if(!this.streak.dateFirstSet) this.streak.dateFirstSet = Date.now()
 }
 
 /**
