@@ -1,7 +1,7 @@
 const { Client } = require('discord.js')
 const { handleMessage } = require('../messages')
 const { setupDB, createUsers } = require('../db')
-const { BOT_TOKEN } = require('../config')
+const { BOT_TOKEN, GENERAL_CHANNEL_ID, GREETING_MSG } = require('../config')
 
 // Create a Discord client for our bot
 const bot = new Client()
@@ -23,8 +23,13 @@ const configureBot = () => {
   bot.on('message', async message => await handleMessage(message))
 
   bot.on('guildMemberAdd', member => {
-    console.log(`DISCORD: New member added: ${member.user.tag}`)
-    createUsers([{ name: member.user.tag }])
+    const memberTag = member.user.tag
+    console.log(`DISCORD: New member added: ${memberTag}`)
+
+    createUsers([{ name: memberTag }])
+    member.guild.channels.cache
+      .find(channel => channel.id === GENERAL_CHANNEL_ID)
+      .send(`Welcome ${member}! ${GREETING_MSG}`)
   })
 }
 
