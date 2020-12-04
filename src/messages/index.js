@@ -42,6 +42,9 @@ const handleMessage = async message => {
       case 'stats':
         printStats(message)
         break
+      case 'd':
+        // Special case: ignore overlap with Disboard bot
+        break
       default:
         await message.reply(
           `Command \`${message.content}\` not found. See \`!help\``

@@ -5,7 +5,7 @@
  * -> streak
  * -> lastModified
  * -> longestStreak
- * -> daysSinceFirstStreak
+ * -> recoveringSince
  */
 exports.createUserStatsMsg = opts => `
 ${opts.user} Stats
@@ -13,5 +13,5 @@ ${opts.user} Stats
 Streak:           ${opts.streak}
 Last update:      ${opts.lastModified}
 Longest streak:   ${opts.longestStreak}
-Recovering since: ${opts.daysSinceFirstStreak}
+Recovering since: ${opts.recoveringSince}
 `

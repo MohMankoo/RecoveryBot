@@ -37,8 +37,13 @@ const printStats = message => {
         user.streak.longest === 1 ? '' : 's'
       }`
 
-      // Calculate num of days since first streak-setting command
-      const daysSinceFirstStreak = moment(user.streak.dateFirstSet).fromNow()
+      // Calculate how long user has been reocvering
+      // based on the longer timespan: best streak vs days recovering
+      const daysSinceFirstStreak = Math.max(
+        parseInt(moment().diff(user.streak.dateFirstSet, 'days')),
+        parseInt(longestStreak)
+      )
+      const recoveringSince = `at least ${daysSinceFirstStreak || 0} days ago`
 
       await message.channel.send(
         createUserStatsMsg({
@@ -46,7 +51,7 @@ const printStats = message => {
           streak,
           lastModified,
           longestStreak,
-          daysSinceFirstStreak
+          recoveringSince
         }),
         { code: true }
       )
